@@ -1,26 +1,62 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
+\usepackage{fourier}
 \usepackage{natbib}
 \usepackage{geometry}
 \usepackage{authblk}
 
 \sloppy
 
-\title{Machine Learning and Data Mining with the Apache Spark Big Data platform}
+\title{\textbf{Machine Learning and Data Mining with the Apache Spark Big Data platform}}
 \author{Benjamin Fovet, Maxime Gasque, François Horel, Héloïse Hourquebie, Abderrahman Lahjouji, Anass Seddiki}
 \affil{\texttt{\{bfovet, mgasque, fhorel, hhourquebie, alahjouji, aseddiki\} @enseirb-matmeca.fr}}
-\date{January 2015}
 
 \begin{document}
 
 \maketitle
 
-\textbf{Abstract.} This paper deals with the concepts of machine learning and data mining social networks, which are increasingly useful for businesses to know the consumers' sentiment towards their brand. This project, intended for use by engineers at Orange France, focuses on the development of a micro-services architecture built around the open source cluster computing framework Apache Spark. Thanks to is distributed model, Spark can process massive amounts of data stored in databases as well as real time data streamed from social networks such as Twitter, Facebook and Orange forum websites. These data are then stored in a cluster database and exposed by an Application Programming Interface (API) server for users to see them in real time.
+\textbf{Abstract.} This paper deals with the concepts of \textbf{\textit{machine learning}} and \textbf{\textit{data mining}} social networks, which are increasingly useful for businesses to know the consumers' sentiment towards their brand. This project, intended for use by engineers at Orange France, focuses on the development of a micro-services architecture built around the open source cluster computing framework Apache Spark. Thanks to is distributed model, Spark can process massive amounts of data stored in databases as well as real time data streamed from social networks such as Twitter, Facebook and Orange forum websites. These data are then stored in a cluster database and exposed by an Application Programming Interface (API) server for users to see them in real time.
 
 
-\tableofcontents
+\section{Context}
+% What is Big Data ? (short intro)
+Big data is a term used to designate data that is not only too voluminous to fit in a standard database, but is also too diverse and appears at such speed that it cannot be processed using mainstream systems. [Big data now, 2012 edition]
 
-\section{Introduction}
+% Orange wants to use Apache Spark
+Currently, Orange France is a company already working on big data applications and is interested in using emerging big data technologies. More precisely, among those technologies available today, Apache Spark is the most promising one thanks to its processing performances that makes it well suited to machine learning algorithms.
+
+% Our goal is to demonstrate Spark capabilities, effectiveness and usability through use cases
+\subsection{Using Spark in real world scenarios}
+The goal of this project is to demonstrate Spark capabilities by using it in several use cases.
+
+% What is Apache Spark ? What are the possibilities ? How does it work ?
+\subsection{Apache Spark}
+
+
+\section{Use cases}
+% Video use case
+\subsection{Estimating the crowd in Orange stores}
+
+% Social networks use case
+\subsection{Data mining social networks}
+\subsubsection{Sentiment analysis}
+
+\subsubsection{Specific computed indicators}
+
+% Every component of our architecture
+\subsection{Micro-services architecture}
+
+% Presentation and schema first
+
+\subsubsection{Docker}
+
+\subsubsection{Spark cluster}
+
+\subsubsection{Cassandra database cluster}
+
+\subsubsection{API}
+
+\subsubsection{ELK stack}
 
 \section{Conclusion}
 
