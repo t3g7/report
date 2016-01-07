@@ -84,11 +84,11 @@ The first approach consists of deciding whether a text is positive, negative or 
 
 The following workflow example is based on a real tweet from an Orange consumer.
 
-% Figure, tweet text : La connexion crash et le débit est vraiment instable
+% Figure, tweet text : Ma connexion internet est vraiment très instable en ce moment, j'ai souvent aucun accès a internet, c'est normal @Orange_conseil ?
 
 The first step is to tokenize the text, translating a sentence into a list of independant words. This is done using the \texttt{FrenchTokenizer} \url{https://github.com/stanfordnlp/CoreNLP/blob/master/src/edu/stanford/nlp/international/french/process/FrenchTokenizer.java}, part of the Stanford CoreNLP suite of Natural Language Processing tools. Along with tokenizing a text, common words with no interesting meaning such as "le", "dans", "à" also known as "stop words" are filtered out to produce the following list of meaningful words.
 
-% Figure, processed tweet : connexion, crash, début, vraiment, instable
+% Figure, processed tweet : connexion, internet, vraiment, instable, moment, souvent, aucun, accès, internet, normal
 
 Next, each word in the above list is looked up in the positive and negative words dictionaries. If found, the weight associated with a negative or positive sentiment, depending on which dictionary the word has been found in, is increased by an increment of one.
 
@@ -97,6 +97,13 @@ Finally, the sentiment for the whole tweet is given by computing the difference 
 This method is far from perfect since it gives a sentiment based on separate words instead of the context of a sentence. The sentiment analysis annotator from Stanford CoreNLP \url{https://stanfordnlp.github.io/CoreNLP} was tested before implementing this technique and although it yields more accurate results based on a large grammar treebank, it is only available for English text analysis.
 
 \paragraph{Machine learning-based approach}
+
+Thanks to Spark's Machine Learning library \textit{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes algorithm, a probabilistic classifier based on Bayes' theorem, is implemented through two steps: train and predict.
+
+Training the data requires having a set of tweets already classified by hand, with 1 meaning positive and 0 meaning negative. This data set is then loaded and split into training data, used to train the classifier model, and testing data, used to assess the performance and the accuracy of the trained model.
+With this algorithm, 74\% of the 1343 tweets, is correctly classified.
+
+Predicting is then possible by applying the previous trained model.
 
 \subsubsection{Specific computed indicators}
 
