@@ -114,11 +114,22 @@ Predicting is then possible by applying the previous trained model.
 \paragraph{Orange forums}
 
 % Every component of our architecture
-\section{Building a micro-services architecture}
+\section{Building a microservices architecture}
 
 % Presentation and schema first
 
+Microservices is an architectural style in which large complex software applications are broken down into a collection of small, independent, loosely coupled processes. This helps upgrading, modifying or changing one service instead of taking down the entire system. As shown in the figure below, this project is composed of several services communicating with each other, which are presented in the next sections.
+
 \subsection{Docker}
+
+To facilitate the deployment of each application, Docker is the ideal technology. It automates the deployment of applications inside containers, isolated from the host and other containers by leveraging functionalities of the Linux kernel. Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run: code, runtime, system tools, system libraries – ensuring that it will run consistently across all environments. In terms of virtualization, each Docker container uses the host OS (Linux) features instead of requiring an hypervisor and a guest OS like a virtual machine.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.45]{img/docker-vs-vm.png}
+    \caption{Comparison between VMs and Docker}
+    \label{docker-vs-vm}
+\end{figure}
 
 \subsection{Spark cluster}
 
