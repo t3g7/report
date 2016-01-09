@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{fourier}
+\usepackage[T1]{fontenc}
 \usepackage{natbib}
 \usepackage[top=2.7cm, bottom=2.7cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage{graphicx}
@@ -76,23 +77,33 @@ Applications are also separated by sources, allowing a more flexible development
 Sentiment analysis refers to the use of natural language processing and text analysis to identify and extract subjective information in source materials. It aims to classify the polarity of a given text — whether the expressed opinion is positive, negative, or neutral. 
 Based on the source, sentiment analysis is applied to tweets on Twitter, posts on Facebook, and thread titles and messages on forums.
 
-% Also talk about testing http://nlp.stanford.edu/sentiment/ in the first place, only for English tweets
-
 \paragraph{Dictionary-based approach}
 
 The first approach consists of deciding whether a text is positive, negative or neutral by looking at words in isolation, giving positive points for positive words and negative points for negative words found in two separate dictionaries and then summing up these points.
 
 The following workflow example is based on a real tweet from an Orange consumer.
 
-% Figure, tweet text : Ma connexion internet est vraiment très instable en ce moment, j'ai souvent aucun accès a internet, c'est normal @Orange_conseil ?
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.6]{img/tweet1.png}
+    \caption{Tweet from a user to \textbf{@Orange\_conseil}}
+    \label{tweet1}
+\end{figure}
 
 The first step is to tokenize the text, translating a sentence into a list of independant words. This is done using the \texttt{FrenchTokenizer} \url{https://github.com/stanfordnlp/CoreNLP/blob/master/src/edu/stanford/nlp/international/french/process/FrenchTokenizer.java}, part of the Stanford CoreNLP suite of Natural Language Processing tools. Along with tokenizing a text, common words with no interesting meaning such as "le", "dans", "à" also known as "stop words" are filtered out to produce the following list of meaningful words.
 
-% Figure, processed tweet : connexion, internet, vraiment, instable, moment, souvent, aucun, accès, internet, normal
+\begin{figure}[h!]
+    \centering
+    connexion, internet, vraiment, instable, moment, souvent, aucun, accès, internet, normal
+    \caption{Words after tokenization}
+    \label{tokens}
+\end{figure}
 
 Next, each word in the above list is looked up in the positive and negative words dictionaries. If found, the weight associated with a negative or positive sentiment, depending on which dictionary the word has been found in, is increased by an increment of one.
 
-Finally, the sentiment for the whole tweet is given by computing the difference between the positive weight and the negative weight. A sentiment score equal to 0 is associated with "NEUTRAL", while positive scores are marked as "POSITIVE" and negative scores as "NEGATIVE".
+In the above tweet, the words \textit{instable, aucun} can be found in the negative words. The word \textit{normal} is not considered positive nor negative because of the context. In order to label it accordingly, a look behind processing has to be implemented to detect the presence of the word \textit{pas}. The structure \textit{pas normal} would then be labeled as negative meanwhile \textit{normal} would be positive.
+
+Finally, the sentiment for the whole tweet is given by computing the difference between the positive weight and the negative weight. A sentiment score equal to 0 is associated with "NEUTRAL", while positive scores are marked as "POSITIVE" and negative scores as "NEGATIVE". Consequently, the example tweet has a negative weight of 2 and a positive weight of 0, labeling it as negative.
 
 This method is far from perfect since it gives a sentiment based on separate words instead of the context of a sentence. The sentiment analysis annotator from Stanford CoreNLP \url{https://stanfordnlp.github.io/CoreNLP} was tested before implementing this technique and although it yields more accurate results based on a large grammar treebank, it is only available for English text analysis.
 
@@ -133,7 +144,7 @@ To facilitate the deployment of each application, Docker is the ideal technology
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.45]{img/docker-vs-vm.png}
+    \includegraphics[scale=0.4]{img/docker-vs-vm.png}
     \caption{Comparison between VMs and Docker}
     \label{docker-vs-vm}
 \end{figure}
