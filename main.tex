@@ -37,7 +37,7 @@ Spark actually consists of four main interoperable components. The figure \ref{s
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.25]{img/spark-stack.eps}
+    \includegraphics[scale=0.22]{img/spark-stack.eps}
     \caption{The Spark stack}
     \label{spark-stack}
 \end{figure}
@@ -109,16 +109,23 @@ Predicting is then possible by applying the previous trained model.
 
 \paragraph{Twitter}
 
+% Number of tweets per second
+% After sales sosh_fr and orange_conseil time to respond to a tweet
+% Number of retweets for a tweet
+
 \paragraph{Facebook}
 
 \paragraph{Orange forums}
+
+% Scraping web pages
+% Number of topics not responded
 
 % Every component of our architecture
 \section{Building a microservices architecture}
 
 % Presentation and schema first
 
-Microservices is an architectural style in which large complex software applications are broken down into a collection of small, independent, loosely coupled processes. This helps upgrading, modifying or changing one service instead of taking down the entire system. As shown in the figure below, this project is composed of several services communicating with each other, which are presented in the next sections.
+Microservices pattern is an architectural style in which large complex software applications are broken down into a collection of small, independent, loosely coupled processes. This helps upgrading, modifying or changing one service instead of taking down the entire system. As shown in the figure below, this project is composed of several services communicating with each other, which are presented in the next sections.
 
 \subsection{Docker}
 
@@ -131,24 +138,42 @@ To facilitate the deployment of each application, Docker is the ideal technology
     \label{docker-vs-vm}
 \end{figure}
 
+To deploy a Spark cluster, Docker tools such as Swarm and Compose are used. % à détailler
+
 \subsection{Spark cluster}
+
+Spark is a distributed computing framework, following the master-slave model. It is composed of a master which schedules and shares jobs between one or more workers.
 
 \subsection{Cassandra database cluster}
 
+Apache Cassandra is a NoSQL open-source distributed database. Cassandra is designed to handle large amount of data replicated across servers in a cluster.
+
 \subsection{API}
 
+The API, developed with NodeJS, connects to Cassandra to make data available for visualization. Along with this API, a web dashboard has been developed to serve the latter purpose.
+
 \subsection{ELK stack}
+
+In parallel, the ElasticSearch - Logstash - Kibana stack is tested as a turnkey solution to replace Cassandra, the API server and the web interface. % à détailler
 
 \section{Organization and Management}
 
 \subsection{Methodology}
+
+% Agile with sprints, divided by use cases
+
 \subsection{Tools}
+
+% GitHub for source code hosting and issue tracking, Trello for task planning, Google Drive for project documents hosting, Docker Hub for Docker images hosting, Travis-CI for continuous testing, integration and deployment. 
+
 \subsection{Issues}
+
+% New language: scala, many parts to develop and connect together, video processing, new concept of machine learning
 
 \section{Conclusion}
 
 
-
+\section{Bibliography}
 \bibliographystyle{plain}
 \bibliography{references}
 
