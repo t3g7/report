@@ -112,7 +112,19 @@ This method is far from perfect since it gives a sentiment based on separate wor
 Thanks to Spark's Machine Learning library \textit{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes algorithm, a probabilistic classifier based on Bayes' theorem, and the Random Forest algorithm, an ensemble of decision trees for binary and multiclass classification, are implemented through two steps: train and predict.
 
 Training the data requires having a set of tweets already classified by hand, with 1 meaning positive and 0 meaning negative. This data set is then loaded and split into training data, used to train the classifier model, and testing data, used to assess the performance and the accuracy of the trained model.
-With this algorithm, 74\% of the 1343 tweets, is correctly classified.
+With these algorithms, 74\% of the 1343 tweets, is correctly classified. According to the computed results below, the Random Forest algorithm is slightly more accurate than the Naive Bayes algorithm yet it is less time efficient. % Add detail about trees options ?
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+  \hline
+  Algorithm & Naive Bayes & Random Forest \\
+  \hline
+  Accuracy & 74.04\% & 74.68\% \\
+  Training duration (ms) & 623 & 12479 \\
+  Testing duration (ms) & 13 & 136 \\
+  \hline
+\end{tabular}
+\end{center}
 
 Predicting is then possible by applying the previous trained model.
 
