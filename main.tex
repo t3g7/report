@@ -109,7 +109,7 @@ This method is far from perfect since it gives a sentiment based on separate wor
 
 \paragraph{Machine learning-based approach}
 
-Thanks to Spark's Machine Learning library \textit{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes algorithm, a probabilistic classifier based on Bayes' theorem, is implemented through two steps: train and predict.
+Thanks to Spark's Machine Learning library \textit{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes algorithm, a probabilistic classifier based on Bayes' theorem, and the Random Forest algorithm, an ensemble of decision trees for binary and multiclass classification, are implemented through two steps: train and predict.
 
 Training the data requires having a set of tweets already classified by hand, with 1 meaning positive and 0 meaning negative. This data set is then loaded and split into training data, used to train the classifier model, and testing data, used to assess the performance and the accuracy of the trained model.
 With this algorithm, 74\% of the 1343 tweets, is correctly classified.
