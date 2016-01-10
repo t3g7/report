@@ -109,6 +109,9 @@ This method is far from perfect since it gives a sentiment based on separate wor
 
 \paragraph{Machine learning-based approach}
 
+% https://spark.apache.org/docs/latest/mllib-naive-bayes.html
+% https://spark.apache.org/docs/latest/mllib-ensembles.html#training
+
 Thanks to Spark's Machine Learning library \textit{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes algorithm, a probabilistic classifier based on Bayes' theorem, and the Random Forest algorithm, an ensemble of decision trees for binary and multiclass classification, are implemented through two steps: train and predict.
 
 Training the data requires having a set of tweets already classified by hand, with 1 meaning positive and 0 meaning negative. This data set is then loaded and 80\% of the data is split into training data, used to train the classifier model, while 20\% is split into testing data, used to assess the performance and the accuracy of the trained model.
@@ -150,6 +153,13 @@ Predicting is then possible by applying the previous trained model.
 
 Microservices pattern is an architectural style in which large complex software applications are broken down into a collection of small, independent, loosely coupled processes. This helps upgrading, modifying or changing one service instead of taking down the entire system. As shown in the figure below, this project is composed of several services communicating with each other, which are presented in the next sections.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.1]{img/infra.png}
+    \caption{Deployed infrastructure}
+    \label{infra}
+\end{figure}
+
 \subsection{Docker}
 
 To facilitate the deployment of each application, Docker is the ideal technology. It automates the deployment of applications inside containers, isolated from the host and other containers by leveraging functionalities of the Linux kernel. Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run: code, runtime, system tools, system libraries – ensuring that it will run consistently across all environments. In terms of virtualization, each Docker container uses the host OS (Linux) features instead of requiring an hypervisor and a guest OS like a virtual machine.
@@ -165,11 +175,14 @@ To deploy a Spark cluster, Docker tools such as Swarm and Compose are used. % à
 
 \subsection{Spark cluster}
 
+% https://spark.apache.org/docs/1.6.0/cluster-overview.html
+% http://blog.ippon.fr/2014/11/20/utiliser-apache-spark-en-cluster/
+
 Spark is a distributed computing framework, following the master-slave model. It is composed of a master which schedules and shares jobs between one or more workers.
 
 \subsection{Cassandra database cluster}
 
-Apache Cassandra is a NoSQL open-source distributed database. Cassandra is designed to handle large amount of data replicated across servers in a cluster.
+Apache Cassandra is a NoSQL open-source distributed database. Cassandra is designed to handle large amount of data replicated across servers in a cluster. Each node is installed on the same machine as the spark workers in order to optimize access to the database and minimize network latency.
 
 \subsection{API}
 
@@ -209,4 +222,20 @@ http://nlp.stanford.edu/publications.shtml:
 Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andrew Ng, and Christopher Potts. 2013. Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank. In EMNLP. [pdf, bib, info]
 
 \section{Appendices}
+\subsection{Project organization}
+
+\subsubsection{Project planning}
+% Gantt chart
+
+\subsubsection{Sprints}
+% sprint table with details
+
+\subsubsection{Burndown chart}
+
+
+\subsection{Team charter}
+
+\subsection{Data visualization dashboard}
+
+
 \end{document}
