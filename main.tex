@@ -8,6 +8,7 @@
 \usepackage{authblk}
 \usepackage{hyperref}
 \usepackage{fancyref}
+\setlength\parindent{0pt}
 
 \sloppy
 
@@ -25,16 +26,20 @@
 
 \section{Context}
 % What is Big Data ? (short intro)
-Big data is a term used to designate data that is not only too voluminous to fit in a standard database, but is also too diverse and appears at such speed that it cannot be processed using mainstream systems. [Big data now, 2012 edition]
 
+Big data is a term used to designate data that is not only too voluminous to fit in a standard database, but is also too diverse and appears at such speed that it cannot be processed using mainstream systems. [Big data now, 2012 edition]
+\vskip 9pt
 % Orange wants to use Apache Spark
 Currently, Orange France is a company already working on big data applications and is interested in using emerging big data technologies. More precisely, among those technologies available today, Apache Spark is the most promising one thanks to its processing performances that makes it well suited to machine learning algorithms.
 
 % What is Apache Spark ? What are the possibilities ? How does it work ?
 \subsection{Apache Spark}
 \label{apache spark}
-Apache Spark is a distributed and highly scalable in-memory system, providing the ability to develop applications using languages like Java, Scala (the language used to write Spark itself), Python and R. It was originally developed at the University of California, Berkeley and donated to the Apache Software Foundation in 2013.
-Spark actually consists of four main interoperable components. The figure \ref{spark-stack} below shows the modules built on top of the Spark Core.
+Apache Spark is a distributed and highly scalable system, providing the ability to develop applications using languages like Java, Scala (the language used to write Spark itself), Python and R. It was originally developed at the University of California, Berkeley and donated to the Apache Software Foundation in 2013.
+Contrary to existing distributed computing software for processing very large data sets, such as Apache Hadoop, Spark is based on an in-memory programming model instead of using the MapReduce [https://wiki.apache.org/hadoop/MapReduce] disk-based model, allowing it to be faster and more flexible. For instance, Spark can sort 100 TB of data three times faster and with ten times fewer machine than MapReduce [https://spark.apache.org/news/spark-wins-daytona-gray-sort-100tb-benchmark.html].
+
+\newpage
+Spark consists of four main interoperable components. The figure \ref{spark-stack} below shows the modules built on top of the Spark Core.
 
 \begin{figure}[h!]
     \centering
@@ -43,11 +48,11 @@ Spark actually consists of four main interoperable components. The figure \ref{s
     \label{spark-stack}
 \end{figure}
 
-Spark Core is the foundation of the Spark project and contains functionalities such as task scheduling, memory management, fault recovery and more. On top of that lies four submodules.
+Spark Core is the foundation of the Spark project and contains features such as task scheduling, memory management, fault recovery and more. On top of that lies four modules.
 Spark SQL is Spark's package for working with structured data which allows SQL queries on many sources of data.
 Spark Streaming leverages Spark Core capabilities to enable processing of live streams of data. It is used extensively in this project for fetching data from social networks.
 MLlib is a library containing machine learning algorithms that can be applied to compute statistical models from data.
-Finally, GraphX is another library for manipulating graphs and performing graph computations.
+Finally, GraphX is another library for manipulating graphs and performing graph computations. 
 
 % Our goal is to demonstrate Spark capabilities, effectiveness and usability through use cases
 \subsection{Using Spark in real world scenarios}
@@ -56,6 +61,8 @@ The goal of this project is to demonstrate Spark capabilities, effectiveness and
 \section{Developed use cases}
 % Video use case
 \subsection{Estimating the crowd in Orange stores}
+
+In the way Google shows rush hours of stores and businesses [https://support.google.com/business/answer/6263531?hl=en], the first use case consists of analyzing videos to deduce when customers are more likely to visit Orange stores.
 
 % Social networks use case
 \subsection{Data mining social networks}
@@ -68,9 +75,9 @@ All these sources are used for fetching live data and feeding Spark with them.
 
 \subsubsection{Spark applications}
 
-As said in section~\ref{apache spark}, Spark applications can be written in several languages: Java, Python or Scala. Scala was initially chosen since Spark itself is developed in Scala and it is also less verbose than Java code. Furthermore, Java and Scala applications have the advantage of being compiled and packaged into an \textbf{Uber-JAR}. JAR (Java ARchive) is a package file format used to aggregate class files required for an application to run, and an Uber-JAR is a JAR that not only contains the application code but also embeds its dependencies as well. This way, the application only needs to be submitted with the Uber-JAR file to Spark for it to be run.
+As said in section~\ref{apache spark}, Spark applications can be written in several languages: Java, Python or Scala. Scala was initially chosen since Spark itself is developed in Scala and it is also less verbose than Java code. Furthermore, Java and Scala applications have the advantage of being compiled and packaged into an \textbf{Uber-JAR}. JAR (Java ARchive) is a package file format used to aggregate class files required for an application to run, and an Uber-JAR is a JAR that not only contains the application code but also embeds its dependencies as well. This way, the application only needs to be submitted with the Uber-JAR file to Spark to be executed.
 
-Applications are also separated by sources, allowing a more flexible development and release to production as well as a reduction of risks. Indeed, Facebook and Twitter have their own independant API services and having issues with one will not impact the other. This structure also leads to a better bug tracking management with having the bug-free application uninterrupted.
+Applications are also separated by sources, allowing a more flexible development and release to production as well as a reduction of risks. Indeed, Facebook and Twitter have their own independent API services and having issues with one will not impact the other. This structure also leads to a better bug tracking management with having the bug-free application uninterrupted.
 
 \subsubsection{Sentiment analysis}
 
@@ -115,7 +122,7 @@ This method is far from perfect since it gives a sentiment based on separate wor
 Thanks to Spark's Machine Learning library \textit{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes algorithm, a probabilistic classifier based on Bayes' theorem, and the Random Forest algorithm, an ensemble of decision trees for binary and multiclass classification, are implemented through two steps: train and predict.
 
 Training the data requires having a set of tweets already classified by hand, with 1 meaning positive and 0 meaning negative. This data set is then loaded and 80\% of the data is split into training data, used to train the classifier model, while 20\% is split into testing data, used to assess the performance and the accuracy of the trained model.
-With these algorithms, 74\% of the 1343 tweets, is correctly classified. According to the computed results below, the Random Forest algorithm is slightly more accurate than the Naive Bayes algorithm yet it is less time efficient. % Add detail about trees options ?
+With these algorithms, 74\% of the 1343 tweets is correctly classified. According to the computed results below, the Random Forest algorithm is slightly more accurate than the Naive Bayes algorithm yet it is less time efficient. % Add detail about trees options ?
 
 \begin{center}
 \begin{tabular}{|l|c|c|}
@@ -138,12 +145,15 @@ Predicting is then possible by applying the previous trained model.
 % Number of tweets per second
 % After sales sosh_fr and orange_conseil time to respond to a tweet
 % Number of retweets for a tweet
+% Trending hashtags
 
 \paragraph{Facebook}
 
 \paragraph{Orange forums}
 
-% Scraping web pages
+% Scraping web pages:
+%   - each subforum first page and check date
+%       * thread title, link, date, messages
 % Number of topics not responded
 
 % Every component of our architecture
@@ -155,7 +165,7 @@ Microservices pattern is an architectural style in which large complex software 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.1]{img/infra.png}
+    \includegraphics[scale=0.15]{img/archi.png}
     \caption{Deployed infrastructure}
     \label{infra}
 \end{figure}
@@ -166,12 +176,12 @@ To facilitate the deployment of each application, Docker is the ideal technology
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.4]{img/docker-vs-vm.png}
+    \includegraphics[scale=0.3]{img/docker-vs-vm.png}
     \caption{Comparison between VMs and Docker}
     \label{docker-vs-vm}
 \end{figure}
 
-To deploy a Spark cluster, Docker tools such as Swarm and Compose are used. % à détailler
+The Spark cluster is deployed with Docker Compose [https://docs.docker.com/compose/] and both clusters are orchestrated with Docker Swarm [https://docs.docker.com/swarm/].
 
 \subsection{Spark cluster}
 
@@ -180,13 +190,50 @@ To deploy a Spark cluster, Docker tools such as Swarm and Compose are used. % à
 
 Spark is a distributed computing framework, following the master-slave model. It is composed of a master which schedules and shares jobs between one or more workers.
 
-\subsection{Cassandra database cluster}
+\subsection{Cassandra cluster}
 
-Apache Cassandra is a NoSQL open-source distributed database. Cassandra is designed to handle large amount of data replicated across servers in a cluster. Each node is installed on the same machine as the spark workers in order to optimize access to the database and minimize network latency.
+Apache Cassandra is a NoSQL open-source distributed database system. It is designed to handle large amount of data replicated across servers in a cluster. Each node is installed on the same machine as the Spark workers in order to optimize access to the database and minimize network latency.
+
+\paragraph{Parameters}
+
+Ensuring reliability and fault tolerance on multiple nodes is possible by setting the replication factor according to the number of nodes in the cluster. For instance, three nodes (A, B, C) are deployed for this project. 
+
+With a replication factor of 3, the QUORUM level (rounded down to a whole number) is (replication factor/2) + 1 = 2 which means the cluster can tolerate 1 node down. Besides, each node holds 100\% of the data. This allows a client to write data to A and read the exact replica from B.
+
+Furthermore, consistency is configured to use the QUORUM level with the following CQL [\url{http://docs.datastax.com/en/cql/3.1/cql/cql_intro_c.html}] command: CONSISTENCY QUORUM;
+With a replication factor of 3, this ensures that 2 nodes are always written and 2 nodes are always read.
+
+\paragraph{Data schema}
+
+Data is stored in different keyspaces related to the aggregated sources: \textit{twitter\_streaming}, \textit{facebook} and \textit{forums} respectively for Twitter, Facebook and Orange forums.
+
+For example, tweets are stored in a table called tweets with extracted fields from Twitter as well as computed ones: response\_time and sentiment.
+          
+Two other tables are used for storing the velocity in tweets/min (freq) and the most popular hashtags (trends).
 
 \subsection{API}
 
-The API, developed with NodeJS, connects to Cassandra to make data available for visualization. Along with this API, a web dashboard has been developed to serve the latter purpose.
+A RESTful API, developed with NodeJS, is connected to Cassandra to make data available for visualization. 
+Its documentation is written with Swagger [http://swagger.io/] for a better representation.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.4]{img/api-docs.png}
+    \caption{API documentation available at \url{{API_IP_ADDRESS}:8080/docs}}
+    \label{socket}
+\end{figure}
+
+The NodeJS driver for Cassandra [https://github.com/datastax/nodejs-driver] is implemented for streaming data stored in the database to the API.
+
+Along with this API, another NodeJS web server has been developed to serve a web dashboard, using D3.js for charts. When a client loads the page, data is pushed from the API to the dashboard using socket.io [http://socket.io/]. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.12]{img/api-dashboard-socket.png}
+    \caption{Realtime communication between clients and the server with \textbf{socket.io}}
+    \label{socket}
+\end{figure}
+
 
 \subsection{ELK stack}
 
@@ -196,17 +243,41 @@ In parallel, the ElasticSearch - Logstash - Kibana stack is tested as a turnkey 
 
 \subsection{Methodology}
 
-% Agile with sprints, divided by use cases
+Agile software methodology was an efficient way of organizing this project where objectives were not accurate and stable at the beginning. The development was split in sprints (or iteration) of 3 weeks (See appendices).
+Moreover, short-term sprints allowed a part of the team to stop the video processing development before running low on budget (in hours).
+
+The clients were actively involved in the process and meetings were planned every week when possible to demonstrate and review new features. The progress of the project could be followed thanks to weekly reportings available at \url{bfovet.vvv.enseirb-matmeca.fr/reporting_projet}.
 
 \subsection{Tools}
 
-% GitHub for source code hosting and issue tracking, Trello for task planning, Google Drive for project documents hosting, Docker Hub for Docker images hosting, Travis-CI for continuous testing, integration and deployment. 
+% GitHub for source code hosting and issue tracking, Trello for sprint planning and task assignment, Google Drive for project documents sharing, Docker Hub for Docker images hosting, Travis-CI for continuous testing, integration and deployment.
 
 \subsection{Issues}
 
-% New language: scala, many parts to develop and connect together, video processing, new concept of machine learning
+% Data privacy policy: restricted access to Orange data --> alternatives: social networks and open source data sets
+
+% TECHNINCAL ISSUES
+% New concept of machine learning
+% Many parts to develop and connect together
+% New language: scala
+% Video processing is time consuming + integration with Spark
+% Tuning and configuring spark correctly
 
 \section{Conclusion}
+
+% Spark, useful software for Big Data
+%  - Aggregating various sources
+%  - Many libraries available for data processing
+
+% Defining stores rush hours
+%  - Identifying overcrowded stores
+%  - Shortening customers waiting time
+
+% Detecting issues on social networks
+%  - Helping community managers focus on unanswered questions
+%  - Sentiment towards the brand
+
+% Ouverture sur Apache Flink, next software for Big Data processing, focused on streaming, comparable to Spark Streaming
 
 
 \section{Bibliography}
@@ -229,6 +300,23 @@ Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andr
 
 \subsubsection{Sprints}
 % sprint table with details
+
+%Sprint 0
+%    Learning Big Data and Spark
+%    Finding the use cases to develop
+%Sprint 1
+%    Apache Spark deployment 
+%    Real-time video processing setup
+%    Twitter API exploration
+%Sprint 2
+%    Twitter mining with Spark
+%    Real-time video processing with Spark
+%Sprint 3
+%    Twitter analysis 
+%    Facebook mining & analysis
+%    Forums mining & analysis
+%    Data visualization
+
 
 \subsubsection{Burndown chart}
 
