@@ -21,14 +21,14 @@
 
 \maketitle
 
-\textbf{Abstract.} This paper deals with the concepts of \textbf{\textit{machine learning}} and \textbf{\textit{data mining}} social networks, which are increasingly useful for businesses to know the consumers' sentiment towards their brand. This project, intended for use by engineers at Orange France, focuses on the development of a micro-services architecture built around the open source cluster computing framework Apache Spark. Thanks to is distributed model, Spark can process massive amounts of data stored in databases as well as real time data streamed from social networks such as Twitter, Facebook and Orange forum websites. These data are then stored in a cluster database and exposed by an Application Programming Interface (API) server for users to see them in real time.
+\textbf{Abstract.} This paper deals with the concepts of \textbf{\textit{machine learning}} and \textbf{\textit{data mining}} social networks, which are increasingly useful for businesses to know the consumers' sentiment towards their brand. This project, intended for use by engineers at Orange France, focuses on the development of a micro-services architecture built around the open source cluster computing framework Apache Spark. Thanks to is distributed model, Spark can process massive amounts of data stored in databases as well as real time data streamed from social networks such as Twitter, Facebook and Orange forums. These data are then stored in a cluster database and exposed by an Application Programming Interface (API) server for users to see them in real time.
 
 
 \section{Context}
 % What is Big Data ? (short intro)
-
 Big data is a term used to designate data that is not only too voluminous to fit in a standard database, but is also too diverse and appears at such speed that it cannot be processed using mainstream systems. [Big data now, 2012 edition]
 \vskip 9pt
+
 % Orange wants to use Apache Spark
 Currently, Orange France is a company already working on big data applications and is interested in using emerging big data technologies. More precisely, among those technologies available today, Apache Spark is the most promising one thanks to its processing performances that makes it well suited to machine learning algorithms.
 
@@ -246,11 +246,15 @@ In parallel, the ElasticSearch - Logstash - Kibana stack is tested as a turnkey 
 Agile software methodology was an efficient way of organizing this project where objectives were not accurate and stable at the beginning. The development was split in sprints (or iteration) of 3 weeks (See appendices).
 Moreover, short-term sprints allowed a part of the team to stop the video processing development before running low on budget (in hours).
 
-The clients were actively involved in the process and meetings were planned every week when possible to demonstrate and review new features. The progress of the project could be followed thanks to weekly reportings available at \url{bfovet.vvv.enseirb-matmeca.fr/reporting_projet}.
+The clients were actively involved in the process and meetings were planned every week when possible to demonstrate and review new features. The progress of the project could be followed thanks to weekly progress reports available at \url{bfovet.vvv.enseirb-matmeca.fr/reporting_projet}.
 
 \subsection{Tools}
 
-% GitHub for source code hosting and issue tracking, Trello for sprint planning and task assignment, Google Drive for project documents sharing, Docker Hub for Docker images hosting, Travis-CI for continuous testing, integration and deployment.
+The project was managed on Trello. For each sprint, three boards (To do, In progress, Done) were used to sort tasks.
+Progress and meeting reports, resources, tutorials as weel as management documents were shared on Google Drive.
+GitHub was used for source code hosting and issue tracking. Each service/use case has its own repository, available at \url{https://github.com/t3g7}.
+Applications were unit tested with Travis CI, a continuous integration service used to build and test projects hosted at GitHub. Each time a team member pushed code to GitHub, a test build was triggered on Travis CI.
+After a successful test on Travis CI, the resulting built Docker image was uploaded to the Docker Hub, a cloud hosted service for Docker image repositories.
 
 \subsection{Issues}
 
@@ -292,6 +296,9 @@ http://nlp.stanford.edu/publications.shtml:
 
 Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andrew Ng, and Christopher Potts. 2013. Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank. In EMNLP. [pdf, bib, info]
 
+
+\newpage
+\pagenumbering{gobble}
 \section{Appendices}
 \subsection{Project organization}
 
