@@ -258,14 +258,11 @@ After a successful test on Travis CI, the resulting built Docker image was uploa
 
 \subsection{Issues}
 
-% Data privacy policy: restricted access to Orange data --> alternatives: social networks and open source data sets
+Early in the project, data privacy issues were faced. A use case about analyzing customers logs was considered yet data had to be anonymized in the first place. Also, because access to Orange data was restricted, it was decided to focus on alternative sources of data: social networks and open source data sets.
 
-% TECHNINCAL ISSUES
-% New concept of machine learning
-% Many parts to develop and connect together
-% New language: scala
-% Video processing is time consuming + integration with Spark
-% Tuning and configuring spark correctly
+Moreover, many technical issues had to be solved or bypassed. Scala was a new language with a particular syntax to be assimilated and machine learning and big data were concepts not addressed classes.
+Installing and configuring Apache Spark took several hours to be complete. Because a microservices architecture was preferable to be dealt with, many different parts hat to be developed and then integrated together.
+The sprint involving video processing had to be abandoned due to an overtime risk. Its integration with Spark was indeed too complex since it involved machine learning on images as well as streaming large amounts of data in real time.
 
 \section{Conclusion}
 
