@@ -236,7 +236,6 @@ Along with this API, another \textsf{NodeJS} web server has been developed to se
     \label{socket}
 \end{figure}
 
-
 \subsection{ELK stack}
 
 In parallel, the \textsf{ElasticSearch} - \textsf{Logstash} - \textsf{Kibana} stack is tested as a turnkey solution to replace \textsf{Cassandra}, the API and the web dashboard. % à détailler
@@ -249,6 +248,8 @@ Agile software methodology was an efficient way of organizing this project where
 Moreover, short-term sprints allowed a part of the team to stop the video processing development before running low on budget (in hours).
 
 The clients were actively involved in the process and meetings were planned every week when possible to demonstrate and review new features. The progress of the project could be followed thanks to weekly progress reports available at \url{bfovet.vvv.enseirb-matmeca.fr/reporting_projet}.
+
+A team charter was first written to define the organization and the values shared by the team during this project.
 
 \subsection{Tools}
 
@@ -292,12 +293,42 @@ Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andr
 \newpage
 \pagenumbering{gobble}
 \section{Appendices}
+
+\subsection{Data visualization dashboard}
+
 \subsection{Project organization}
 
 \subsubsection{Project planning}
-% Gantt chart
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.5]{img/gantt.png}
+    \caption{Gantt diagram}
+    \label{gantt}
+\end{figure}
 
 \subsubsection{Sprints}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+  \hline
+  Sprint & Task \\
+  \hline
+  0 & Learning Big Data and Spark \\
+    & Finding the use cases to develop \\ \hline
+  1 & Deploying Apache Spark \\
+    & Setting up real-time video processing \\
+    & Exploring the Twitter API \\ \hline
+  2 & Twitter mining with Spark \\
+    & Real-time video processing with Spark \\ \hline
+  3 & Twitter analysis \\
+    & Facebook mining \& analysis \\
+    & Forums mining \& analysis \\
+    & Data visualization \\
+  \hline
+\end{tabular}
+\end{center}
+
 % sprint table with details
 
 %Sprint 0
@@ -319,10 +350,11 @@ Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andr
 
 \subsubsection{Burndown chart}
 
-
-\subsection{Team charter}
-
-\subsection{Data visualization dashboard}
-
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.5]{img/burndown.png}
+    \caption{Burndown chart}
+    \label{gantt}
+\end{figure}
 
 \end{document}
