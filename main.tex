@@ -3,7 +3,7 @@
 \usepackage{fourier}
 \usepackage[T1]{fontenc}
 \usepackage{natbib}
-\usepackage[top=2.7cm, bottom=2.7cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage{graphicx}
 \usepackage{authblk}
 \usepackage{hyperref}
@@ -31,7 +31,7 @@
 
 \section{Context}
 % What is Big Data ? (short intro)
-Big data is a term used to designate data that is not only too voluminous to fit in a standard database, but is also too diverse and appears at such speed that it cannot be processed using mainstream systems. [Big data now, 2012 edition]
+Big data [1] is a term used to designate data that is not only too voluminous to fit in a standard database, but is also too diverse and appears at such speed that it cannot be processed using mainstream systems. 
 \vskip 9pt
 
 % Orange wants to use Apache Spark
@@ -42,11 +42,12 @@ Currently, \textsf{Orange} is a company already working on big data applications
 \label{apache spark}
 \textsf{Apache Spark} is a distributed and highly scalable system, providing the ability to develop applications using languages like \textsf{Java}, \textsf{Scala} (the language used to write \textsf{Spark} itself), \textsf{Python} and \textsf{R}. It was originally developed at the University of California, Berkeley and donated to the Apache Software Foundation in 2013.
 
-Contrary to existing distributed computing software for processing very large data sets, such as \textsf{Apache Hadoop}, \textsf{Spark} is based on an in-memory programming model, instead of using the \textsf{MapReduce} [https://wiki.apache.org/hadoop/MapReduce] disk-based model, allowing it to be faster and more flexible. For instance, \textsf{Spark} can sort 100 TB of data three times faster and with ten times fewer machines than \textsf{MapReduce} [https://spark.apache.org/news/spark-wins-daytona-gray-sort-100tb-benchmark.html].
+Contrary to existing distributed computing software for processing very large data sets, such as \textsf{Apache Hadoop}, \textsf{Spark} is based on an in-memory programming model, instead of using the \textsf{MapReduce} [2] disk-based model, allowing it to be faster and more flexible. For instance, \textsf{Spark} can sort 100 TB of data three times faster and with ten times fewer machines than \textsf{MapReduce} [3].
+\vspace{9pt}
+
+\textsf{Spark} consists of four main interoperable components. The figure \ref{spark-stack} shows the modules built on top of the \textsf{Spark Core}.
 
 \newpage
-\textsf{Spark} consists of four main interoperable components. The figure \ref{spark-stack} below shows the modules built on top of the \textsf{Spark Core}.
-
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.2]{img/spark-stack.eps}
@@ -68,7 +69,7 @@ The goal of this project is to demonstrate \textsf{Spark} capabilities, effectiv
 % Video use case
 \subsection{Estimating the crowd in Orange stores}
 
-In the way \textsf{Google} shows rush hours of stores and businesses [https://support.google.com/business/answer/6263531?hl=en], the first use case consists of analyzing videos to deduce when customers are more likely to visit \textsf{Orange} stores. \textsf{OpenCV} was used...
+In the way \textsf{Google} shows rush hours of stores and businesses [4], the first use case consists of analyzing videos to deduce when customers are more likely to visit \textsf{Orange} stores. \textsf{OpenCV} was used...
 
 % Social networks use case
 \subsection{Data mining social networks}
@@ -101,7 +102,7 @@ The following workflow example is based on a real tweet from an \textsf{Orange} 
     \label{tweet1}
 \end{figure}
 
-The first step is to tokenize the text, translating a sentence into a list of independant words. This is done using the  \href{https://github.com/stanfordnlp/CoreNLP/blob/master/src/edu/stanford/nlp/international/french/process/FrenchTokenizer.java}{\texttt{FrenchTokenizer}} class, part of the \href{https://stanfordnlp.github.io/CoreNLP}{\textsf{\textbf{Stanford CoreNLP}}} suite of Natural Language Processing tools. Along with tokenizing a text, common words with no interesting meaning such as "le", "dans", "à" also known as "stop words" are filtered out to produce the following list of meaningful words.
+The first step is to tokenize the text, translating a sentence into a list of independant words. This is done using the  \href{https://github.com/stanfordnlp/CoreNLP/blob/master/src/edu/stanford/nlp/international/french/process/FrenchTokenizer.java}{\texttt{FrenchTokenizer}} class, part of the \href{https://stanfordnlp.github.io/CoreNLP}{\textsf{\textbf{Stanford CoreNLP}}} suite of Natural Language Processing tools [5]. Along with tokenizing a text, common words with no interesting meaning such as "le", "dans", "à" also known as "stop words" are filtered out to produce the following list of meaningful words.
 
 \vspace{9pt}
 \begin{figure}[h!]
@@ -122,10 +123,7 @@ This method is far from perfect since it gives a sentiment based on separate wor
 
 \paragraph{Machine learning-based approach}
 
-% https://spark.apache.org/docs/latest/mllib-naive-bayes.html
-% https://spark.apache.org/docs/latest/mllib-ensembles.html#training
-
-Thanks to \textsf{Spark}'s Machine Learning library \textsf{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes algorithm, a probabilistic classifier based on Bayes' theorem, and the Random Forest algorithm, an ensemble of decision trees for binary and multiclass classification, are implemented through two steps: train and predict.
+Thanks to \textsf{Spark}'s Machine Learning library \textsf{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes [6] algorithm, a probabilistic classifier based on Bayes' theorem, and the Random Forest [7] algorithm, an ensemble of decision trees for binary and multiclass classification, are implemented through two steps: train and predict.
 
 \vspace{9pt}
 Training the data requires having a set of tweets already classified by hand, with 1 meaning positive and 0 meaning negative. This data set is then loaded and 80\% of the data is split into training data, used to train the classifier model, while 20\% is split into testing data, used to assess the performance and the accuracy of the trained model.
@@ -155,7 +153,7 @@ For \textsf{Twitter}, the response time of a tweet addressed to after sales acco
 
 \paragraph{Orange forums}
 
-Scraping \textsf{Orange} forums web pages was done in \textsf{Scala}, for better integration with \textsf{Spark}, using \href{https://github.com/ruippeixotog/scala-scraper}{\texttt{scala-scraper}} [https://github.com/ruippeixotog/scala-scraper] which provides a powerful library for scraping \textsf{HTML}. At first, each subforum's first page is scraped to fetch the threads' title, link, date and messages. Then the last thread's date is compared to the current system's time. If the two match, data is stored in \textsf{Cassandra}. This is done every minute for real time streaming. Following the same pattern, the number of unanswered topics can be computed. 
+Scraping \textsf{Orange} forums web pages was done in \textsf{Scala}, for better integration with \textsf{Spark}, using \href{https://github.com/ruippeixotog/scala-scraper}{\texttt{scala-scraper}} [8] which provides a powerful library for scraping \textsf{HTML}. At first, each subforum's first page is scraped to fetch the threads' title, link, date and messages. Then the last thread's date is compared to the current system's time. If the two match, data is stored in \textsf{Cassandra}. This is done every minute for real time streaming. Following the same pattern, the number of unanswered topics can be computed. 
 
 % Every component of our architecture
 \section{Building a microservices architecture}
@@ -182,7 +180,7 @@ To facilitate the deployment of each application, \textsf{Docker} is the ideal t
 %    \label{docker-vs-vm}
 %\end{figure}
 
-The \textsf{Spark} cluster is deployed with \textsf{Docker Compose} [https://docs.docker.com/compose/] and both clusters are orchestrated with \textsf{Docker Swarm} [https://docs.docker.com/swarm/].
+The \textsf{Spark} cluster is deployed with \textsf{Docker Compose} [9] and both clusters are orchestrated with \textsf{Docker Swarm} [10].
 
 \subsection{Spark cluster}
 
@@ -198,7 +196,7 @@ Ensuring reliability and fault tolerance on multiple nodes is possible by settin
 
 With a replication factor of 3, the QUORUM level (rounded down to a whole number) is (replication factor/2) + 1 = 2 which means the cluster can tolerate 1 node down. Besides, each node holds 100\% of the data. This allows a client to write data to A and read the exact replica from B.
 
-Furthermore, consistency is configured to use the QUORUM level with the following \textsf{CQL} (\textsf{Cassandra} Query Language) [\url{http://docs.datastax.com/en/cql/3.1/cql/cql_intro_c.html}] command:
+Furthermore, consistency is configured to use the QUORUM level with the following \textsf{CQL} (\textsf{Cassandra} Query Language) [11] command:
 
 \begin{lstlisting}[xleftmargin=5cm]
     CONSISTENCY QUORUM;
@@ -216,7 +214,7 @@ Two other tables are used for storing the velocity in tweets/min (freq) and the 
 \subsection{API}
 
 A RESTful API, developed with \textsf{NodeJS}, is connected to \textsf{Cassandra} to make data available for visualization. 
-Its documentation is written with \textsf{Swagger} [http://swagger.io/] for a better visual representation.
+Its documentation is written with \textsf{Swagger} [12] for a better visual representation.
 
 \begin{figure}[h!]
     \centering
@@ -225,9 +223,9 @@ Its documentation is written with \textsf{Swagger} [http://swagger.io/] for a be
     \label{socket}
 \end{figure}
 
-The \textsf{NodeJS} driver for \textsf{Cassandra} [https://github.com/datastax/nodejs-driver] is implemented for streaming data stored in the database to the API.
+The \textsf{NodeJS} driver for \textsf{Cassandra} [13] is implemented for streaming data stored in the database to the API.
 
-Along with this API, another \textsf{NodeJS} web server has been developed to serve a web dashboard, using \textsf{D3.js} [http://d3js.org/] for charts. When a client loads the page, data is pushed from the API to the dashboard using \textsf{Socket.io} [http://socket.io/]. 
+Along with this API, another \textsf{NodeJS} web server has been developed to serve a web dashboard, using \textsf{D3.js} [14] for charts. When a client loads the page, data is pushed from the API to the dashboard using \textsf{Socket.io} [15].
 
 \begin{figure}[h!]
     \centering
@@ -263,32 +261,73 @@ After a successful test on \textsf{Travis CI}, the resulting built \textsf{Docke
 
 Early in the project, data privacy issues were faced. A use case about analyzing customers logs was considered yet data had to be anonymized in the first place. Also, because access to \textsf{Orange} data was restricted, it was decided to focus on alternative sources of data: social networks and open source data sets.
 
-Moreover, many technical issues had to be solved or bypassed. At first, \textsf{Scala} was a new language with a particular syntax to be assimilated and machine learning and big data were concepts not addressed classes.
-Installing and configuring \textsf{Apache Spark} took several hours to be complete. Because a microservices architecture was preferable to be dealt with, many different parts hat to be developed and then integrated together.
+Moreover, many technical issues had to be solved or bypassed. At first, \textsf{Scala} was a new language with a particular syntax to be assimilated and machine learning and big data were concepts not addressed classes. Installing and configuring \textsf{Apache Spark} took several hours to be complete. Because a microservices architecture was preferable to be dealt with, many different parts hat to be developed and then integrated together.
+
 The sprint involving video processing had to be abandoned due to an overtime risk. Its integration with \textsf{Spark} was indeed too complex since it involved machine learning on images as well as streaming large amounts of data in real time.
 
 \section{Conclusion}
 
 The project consists of applications and services developed around \textsf{Apache Spark}, itself a useful piece of software for processing large amounts of data from various aggregated sources in real time, whether they are databases or online APIs. Development of such applications is relatively simple thanks to a rich ecosystem, including many libraries, bindings for different popular languages and an active community.
+\vspace{4pt}
 
 Though not completed, it would have been possible with enough allocated time to compute stores rush hours with video processing by combining \textsf{OpenCV} and \textsf{Spark}. Objectives of this use case were defined as identifying overcrowded stores and predicting popular times to shorten customers waiting time.
+\vspace{4pt}
 
 Finally, applications for data mining social networks - \textsf{Twitter}, \textsf{Facebook} and \textsf{Orange} forums - are a tool to help community managers to focus on unanswered questions of customers on after-sales accounts and offer a global point of view on trends and sentiment towards the brand from uncorrelated data.
+\vspace{4pt}
 
-While \textsf{Spark} continues to be heavily developed and maintained, next generation software for big data processing are being released. \textsf{Apache Flink} [https://flink.apache.org/] is still in a beta state (0.10.1 - 27 November 2015) and it is focused on streaming making it equivalent to the \textsf{Spark Streaming} module.
+While \textsf{Spark} continues to be heavily developed and maintained, next generation software for big data processing are being released. \textsf{Apache Flink} [16] is still in a beta state (0.10.1 - 27 November 2015) and it is focused on streaming making it equivalent to the \textsf{Spark Streaming} module.
 
-\section{Bibliography}
+\section{References}
 \bibliographystyle{plain}
 \bibliography{references}
 
-%https://stanfordnlp.github.io/CoreNLP/#citing-stanford-corenlp-in-papers:
+[1] \textit{Big data now, 2014 edition}. O'Reilly Media, 2015
+\vspace{1pt}
 
-Manning, Christopher D., Mihai Surdeanu, John Bauer, Jenny Finkel, Steven J. Bethard, and David McClosky. 2014. The Stanford CoreNLP Natural Language Processing Toolkit In Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics: System Demonstrations, pp. 55-60. [http://nlp.stanford.edu/pubs/StanfordCoreNlp2014.pdf] [bib]
+[2] \url{https://wiki.apache.org/hadoop/MapReduce}
+\vspace{1pt}
 
-http://nlp.stanford.edu/publications.shtml:
+[3] "Spark wins Daytona Gray Sort 100TB Benchmark." \url{https://spark.apache.org/news/spark-wins-daytona-gray-sort-100tb-benchmark}. 5 November 2014
+\vspace{1pt}
 
-Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andrew Ng, and Christopher Potts. 2013. Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank. In EMNLP. [pdf, bib, info]
+[4] Business popular times on Google. \url{https://support.google.com/business/answer/6263531?hl=en}
+\vspace{1pt}
 
+[5] Manning, Christopher D., Mihai Surdeanu, John Bauer, Jenny Finkel, Steven J. Bethard, and David McClosky. 2014. The Stanford CoreNLP Natural Language Processing Toolkit In \textit{Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics: System Demonstrations}, pp. 55-60. \url{http://nlp.stanford.edu/pubs/StanfordCoreNlp2014.pdf}
+\vspace{1pt}
+
+[6] Naive Bayes, \url{https://spark.apache.org/docs/latest/mllib-naive-bayes}
+\vspace{1pt}
+
+[7] Random Forest, \url{https://spark.apache.org/docs/latest/mllib-ensembles#random-forests}
+\vspace{1pt}
+
+[8] Rui Gonçalves, scala-scraper on GitHub, \url{https://github.com/ruippeixotog/scala-scraper}
+\vspace{1pt}
+
+[9] Docker Compose, \url{https://docs.docker.com/compose}
+\vspace{1pt}
+
+[10] Docker Swarm, \url{https://docs.docker.com/swarm}
+\vspace{1pt}
+
+[11] CQL, \url{http://docs.datastax.com/en/cql/3.1/cql/cql_intro_c}
+\vspace{1pt}
+
+[12] Swagger, \url{http://swagger.io}
+\vspace{1pt}
+
+[13] DataStax, nodejs-driver on GitHub, \url{https://github.com/datastax/nodejs-driver}
+\vspace{1pt}
+
+[14] Socket.io, \url{http://socket.io}
+\vspace{1pt}
+
+[15] D3.js - Data-Driven Documents, \url{http://d3js.org}
+\vspace{1pt}
+
+[16] Apache Flink, \url{https://flink.apache.org}
 
 \newpage
 \pagenumbering{gobble}
@@ -312,7 +351,7 @@ Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andr
 \begin{center}
 \begin{tabular}{|l|l|}
   \hline
-  Sprint & Task \\
+  Sprint & Task\\
   \hline
   0 & Learning Big Data and Spark \\
     & Finding the use cases to develop \\ \hline
@@ -329,32 +368,13 @@ Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher Manning, Andr
 \end{tabular}
 \end{center}
 
-% sprint table with details
-
-%Sprint 0
-%    Learning Big Data and Spark
-%    Finding the use cases to develop
-%Sprint 1
-%    Apache Spark deployment 
-%    Real-time video processing setup
-%    Twitter API exploration
-%Sprint 2
-%    Twitter mining with Spark
-%    Real-time video processing with Spark
-%Sprint 3
-%    Twitter analysis 
-%    Facebook mining & analysis
-%    Forums mining & analysis
-%    Data visualization
-
-
 \subsubsection{Burndown chart}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.5]{img/burndown.png}
     \caption{Burndown chart}
-    \label{gantt}
+    \label{burndown}
 \end{figure}
 
 \end{document}
