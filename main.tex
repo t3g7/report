@@ -8,6 +8,9 @@
 \usepackage{authblk}
 \usepackage{hyperref}
 \usepackage{fancyref}
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} 
 \setlength\parindent{0pt}
 
 \sloppy
@@ -21,8 +24,9 @@
 
 \maketitle
 
-\textbf{Abstract.} This paper deals with the concepts of \textbf{\textit{machine learning}} and \textbf{\textit{data mining}} social networks, which are increasingly useful for businesses to know the consumers' sentiment towards their brand. This project, intended for use by engineers at Orange France, focuses on the development of a micro-services architecture built around the open source cluster computing framework Apache Spark. Thanks to is distributed model, Spark can process massive amounts of data stored in databases as well as real time data streamed from social networks such as Twitter, Facebook and Orange forums. These data are then stored in a cluster database and exposed by an Application Programming Interface (API) server for users to see them in real time.
-
+\begin{abstract}
+\textbf{Abstract.} This paper deals with the concepts of \textbf{\textit{machine learning}} and \textbf{\textit{data mining}} social networks, which are increasingly useful for businesses to know the consumers' sentiment towards their brand. This project, intended for use by engineers at Orange France, focuses on the development of a micro-services architecture built around the open source cluster computing framework, Apache Spark. Thanks to is distributed model, Spark can process massive amounts of data stored in databases as well as real time data streamed from social networks. Data is then stored in a cluster database and exposed by an Application Programming Interface (API) for users to see them in real time.
+\end{abstract}
 
 \section{Context}
 % What is Big Data ? (short intro)
@@ -142,19 +146,13 @@ Predicting is then possible by applying the previous trained model.
 
 \paragraph{Twitter}
 
-% Number of tweets per second
-% After sales sosh_fr and orange_conseil time to respond to a tweet
-% Number of retweets for a tweet
-% Trending hashtags
+For Twitter, the response time of a tweet addressed to after sales accounts such as Sosh\_fr and Orange\_conseil, the number of retweets for a tweet, the number of tweets per second as well as a ranking of trending hashtags are indicators computed from tweets data.
 
 \paragraph{Facebook}
 
 \paragraph{Orange forums}
 
-% Scraping web pages:
-%   - each subforum first page and check date
-%       * thread title, link, date, messages
-% Number of topics not responded
+Scraping Orange forums web pages was done in Scala, for better integration with Spark, using \url{https://github.com/ruippeixotog/scala-scraper} which provides a powerful library for scraping HTML. At first, each subforum's first page is scraped to fetch the threads' title, link, date and messages. Then the last thread's date is compared to the current system's time. If the two match, data is stored in Cassandra. This is done every minute for real time streaming. Following the same pattern, the number of unanswered topics can be computed. 
 
 % Every component of our architecture
 \section{Building a microservices architecture}
