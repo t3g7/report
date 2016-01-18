@@ -237,6 +237,27 @@ Along with this API, another \textsf{NodeJS} web server has been developed to se
 \subsection{ELK stack}
 
 In parallel, the \textsf{ElasticSearch} - \textsf{Logstash} - \textsf{Kibana} stack is tested as a turnkey solution to replace \textsf{Cassandra}, the API and the web dashboard. % à détailler
+Each of the three parts of the ELK stack have a very specific role : 
+\begin{itemize}
+\item Elasticsearch manages the database and the requests to it.
+\item Logstash puts data in elasticsearch from a data file (csv, json ...). In the project, logstash is not used as Spark enables data to be directly saved in elasticsearch.
+\item Kibana is the visualization tool, for creating nice diagrams andd graphs. It is a web application, in which the dashboards can diretly be created using visual programming.
+\end{itemize}
+
+The architecture used for integrating ELK tools in the project is shown on Figure \ref*{elk}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.12]{img/ELK_use.png}
+    \caption{ELK Stack place in Apache Spark architecture}
+    \label{elk}
+\end{figure}
+
+Once Elacsticsearch has been filled with data treated by Spak, Kibana has access to this data and graphs interpreting those information can be created.
+
+%
+% !! inclure ici une image du dashboard kibana !!
+%
 
 \section{Organization and Management}
 
