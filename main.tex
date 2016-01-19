@@ -69,7 +69,28 @@ The goal of this project is to demonstrate \textsf{Spark} capabilities, effectiv
 % Video use case
 \subsection{Estimating the crowd in Orange stores}
 
-In the way \textsf{Google} shows rush hours of stores and businesses [4], the first use case consists of analyzing videos to deduce when customers are more likely to visit \textsf{Orange} stores. \textsf{OpenCV} was used...
+In the way \textsf{Google} shows rush hours of stores and businesses [4], the first use case consists of analyzing videos to deduce when customers are more likely to visit \textsf{Orange} stores, located by city or by department.
+
+Having infrared sensors at the entrance of the stores to detect a person getting in or out was the first solution yet it was not chosen for a lot of reasons (detection problems due to overlapping, high cost of connected sensors...).
+Having a terminal where users register each time they get to the store was another interesting idea to explore. This solution was also unimplementable since it is costly and needs necessarily the cooperation of the clients which is not always guaranteed. 
+
+Finally, the retained solution was installing a camera in the different stores and using video processing algorithms to detect people. Unfortunately this solution has to be discontinued due to different reasons that we will expose next.
+
+This backlog is divided into two parts. A video processing part and a data collection and visualization part.
+
+\subsubsection{Real time video processing}
+
+This part's goal is to detect and track people on the real-time video stream of each store. Since there are no cameras in the stores at the moment for this purpose, video sets from the Internet and some available live streams are retrieved to test our code. The OpenCV library HOG-based pedestrian detection is used in order to detect people and their faces for more accuracy. An algorithm to track a person over 5 successive frames is also implemented in order to count him only once if this person happens to appear multiple times. Consequently, the program's output is composed of videos with rectangles around the detected persons and squares around their faces. 
+
+After multiple tests and changes, the detection quality could not be improved since many false negatives and false positives occured especially for face detection. The computation process could not be accelerated to get closer to a real time estimation since a GPU (Graphical processing unit) is required for this matter. These were the main problems that led the cancellation of this use case.
+
+\subsubsection{Data transfer and processing}
+
+This part’s purpose is to assure that the number of new persons detected by store after each frame is sent to a central unit where the data’s corresponding store is identified using Spark’s MapReduce functionality and aggregated to get the total number of persons per store hourly and then compute the mean time by city or by department. A front-end module was also planned to be implemented to present the results in real-time.
+
+The work that has been done was mainly based on basic input/output text files for tests instead of the real Apache Kafka channel that was expected to exist between each store and the central module.
+
+Since the problems that were faced in the first part the team from pursuing this use case, implementing the front-end or to compute the mean times of affluence for cities and departments was abandoned.
 
 % Social networks use case
 \subsection{Data mining social networks}
@@ -91,7 +112,7 @@ Based on the source, sentiment analysis is applied to tweets on \textsf{Twitter}
 
 \paragraph{Dictionary-based approach}
 
-The first approach consists of deciding whether a text is positive, negative or neutral by looking at words in isolation, giving positive points for positive words and negative points for negative words found in two separate dictionaries and then summing up these points.
+The first approach consists in deciding whether a text is positive, negative or neutral by looking at words in isolation, giving positive points for positive words and negative points for negative words found in two separate dictionaries and then summing up these points.
 
 The following workflow example is based on a real tweet from an \textsf{Orange} consumer.
 
@@ -114,7 +135,8 @@ The first step is to tokenize the text, translating a sentence into a list of in
 
 Next, each word in the above list is looked up in the positive and negative words dictionaries. If found, the weight associated with a negative or positive sentiment, depending on which dictionary the word has been found in, is increased by an increment of one.
 
-In the above tweet, the words \textit{instable, aucun} can be found in the negative words. The word \textit{normal} is not considered positive nor negative because of the context. In order to label it accordingly, a look behind processing has to be implemented to detect the presence of the word \textit{pas}. The structure \textit{pas normal} would then be labeled as negative meanwhile \textit{normal} would be positive.
+In the above tweet, the words \textit{instable, aucun} can be found in the negative words. 
+%The word \textit{normal} is not considered positive nor negative because of the context. In order to label it accordingly, a look behind processing has to be implemented to detect the presence of the word \textit{pas}. The structure \textit{pas normal} would then be labeled as negative meanwhile \textit{normal} would be positive.
 
 Finally, the sentiment for the whole tweet is given by computing the difference between the positive weight and the negative weight. A sentiment score equal to 0 is associated with "NEUTRAL", while positive scores are marked as "POSITIVE" and negative scores as "NEGATIVE". Consequently, the example tweet has a negative weight of 2 and a positive weight of 0, labeling it as negative.
 
@@ -150,6 +172,8 @@ Predicting data classification is then possible by applying the previous trained
 For \textsf{Twitter}, the response time of a tweet addressed to after sales accounts such as \textsf{@Sosh\_fr} and \textsf{@Orange\_conseil}, the number of retweets for a tweet, the number of tweets per second as well as a ranking of trending hashtags are indicators computed from tweets data.
 
 \paragraph{Facebook}
+
+Similarly to \textsf{Twitter}, the number of \textsf{Facebook} posts collected every minute, the number of likes and comments per post are computed in the same manner.
 
 \paragraph{Orange forums}
 
