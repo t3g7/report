@@ -3,7 +3,7 @@
 \usepackage{fourier}
 \usepackage[T1]{fontenc}
 \usepackage{natbib}
-\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage[top=2.5cm, bottom=2.4cm, left=2.1cm, right=2.1cm]{geometry}
 \usepackage{graphicx}
 \usepackage{authblk}
 \usepackage{hyperref}
@@ -17,8 +17,8 @@
 \sloppy
 
 \title{\textbf{Machine Learning and Data Mining with Apache Spark}}
-\author{Benjamin Fovet, Maxime Gasque, François Horel, Héloïse Hourquebie, Abderrahman Lahjouji, Anass Seddiki}
-\affil{\texttt{\{bfovet, mgasque, fhorel, hhourquebie, alahjouji, aseddiki\} @enseirb-matmeca.fr}}
+\author{Benjamin Fovet, Maxime Gasque, François Horel, Héloïse Hourquebie, \\Abderrahman Lahjouji, Anass Seddiki}
+\affil{\texttt{\{bfovet, mgasque, fhorel, hhourquebie, alahjouji, aseddiki\} \\ \texttt{@enseirb-matmeca.fr}}}
 \date{}
 
 \begin{document}
@@ -42,24 +42,25 @@ Currently, \textsf{Orange} is a company already working on big data applications
 \label{apache spark}
 \textsf{Apache Spark} is a distributed and highly scalable system, providing the ability to develop applications using languages like \textsf{Java}, \textsf{Scala} (the language used to write \textsf{Spark} itself), \textsf{Python} and \textsf{R}. It was originally developed at the University of California, Berkeley and donated to the Apache Software Foundation in 2013.
 
-Contrary to existing distributed computing software for processing very large data sets, such as \textsf{Apache Hadoop}, \textsf{Spark} is based on an in-memory programming model, instead of using the \textsf{MapReduce} [2] disk-based model, allowing it to be faster and more flexible. For instance, \textsf{Spark} can sort 100 TB of data three times faster and with ten times fewer machines than \textsf{MapReduce} [3].
-\vspace{9pt}
-
-\textsf{Spark} consists of four main interoperable components. The figure \ref{spark-stack} shows the modules built on top of the \textsf{Spark Core}.
-
-\newpage
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.2]{img/spark-stack.eps}
+    \includegraphics[scale=0.16]{img/spark-stack.png}
     \caption{The Spark stack}
     \label{spark-stack}
 \end{figure}
 
-\textsf{Spark Core} is the foundation of the \textsf{Spark} project and contains features such as task scheduling, memory management, fault recovery and more. On top of that lies four modules.
-\textsf{\textbf{Spark SQL}} is \textsf{Spark}'s package for working with structured data which allows \textsf{SQL} queries on many sources of data.
-\textsf{\textbf{Spark Streaming}} leverages \textsf{Spark Core} capabilities to enable processing of live streams of data. It is used extensively in this project for fetching data from social networks.
-\textsf{\textbf{MLlib}} is a library containing machine learning algorithms that can be applied to compute statistical models from data.
-Finally, \textsf{\textbf{GraphX}} is another library for manipulating graphs and performing graph computations. 
+Contrary to existing distributed computing software for processing very large data sets, such as \textsf{Apache Hadoop}, \textsf{Spark} is based on an in-memory programming model, instead of using the \textsf{MapReduce} [2] disk-based model, allowing it to be faster and more flexible. For instance, \textsf{Spark} can sort 100 TB of data three times faster and with ten times fewer machines than \textsf{MapReduce} [3].
+\vspace{9pt}
+
+\textsf{Spark} consists of four main interoperable components showed in figure \ref{spark-stack}.
+\textsf{Spark Core} is the foundation of the \textsf{Spark} project and contains features such as task scheduling, memory management and fault recovery. On top of it lies four modules, of which two are used:
+\begin{itemize}
+    %\item \textsf{\textbf{Spark SQL}} is \textsf{Spark}'s package for working with structured data which allows \textsf{SQL} queries on many sources of data.
+    \item \textsf{\textbf{Spark Streaming}} leverages \textsf{Spark Core} capabilities to enable processing of live streams of data. It is used extensively in this project for fetching data from social networks.
+    \item \textsf{\textbf{MLlib}} is a library containing machine learning algorithms that can be applied to compute statistical models from data.
+    %\item \textsf{\textbf{GraphX}} is another library for manipulating graphs and performing graph computations. 
+\end{itemize}
+
 
 % Our goal is to demonstrate Spark capabilities, effectiveness and usability through use cases
 \subsection{Using Spark in real world scenarios}
@@ -71,33 +72,33 @@ The goal of this project is to demonstrate \textsf{Spark} capabilities, effectiv
 
 In the way \textsf{Google} shows rush hours of stores and businesses [4], the first use case consists of analyzing videos to deduce when customers are more likely to visit \textsf{Orange} stores, located by city or by department.
 
-Having infrared sensors at the entrance of the stores to detect a person getting in or out was the first solution yet it was not chosen for a lot of reasons (detection problems due to overlapping, high cost of connected sensors...).
-Having a terminal where users register each time they get to the store was another interesting idea to explore. This solution was also unimplementable since it is costly and needs necessarily the cooperation of the clients which is not always guaranteed. 
+Having infrared sensors at the entrance of the stores to detect a person getting in or out was the first solution yet it was not chosen for many reasons (detection problems due to overlapping, high cost of connected sensors...).
+Having a terminal where users register each time they get to the store was another interesting idea to explore. This solution was also unimplementable since it is costly and necessarily needs the cooperation of the clients which is not always guaranteed. 
 
-Finally, the retained solution was installing a camera in the different stores and using video processing algorithms to detect people. Unfortunately this solution has to be discontinued due to different reasons that we will expose next.
-
-This backlog is divided into two parts. A video processing part and a data collection and visualization part.
+Finally, the retained solution was installing a camera in the different stores and using video processing algorithms to detect people. This solution has to be discontinued due to different reasons that we will expose next.
 
 \subsubsection{Real time video processing}
 
-This part's goal is to detect and track people on the real-time video stream of each store. Since there are no cameras in the stores at the moment for this purpose, video sets from the Internet and some available live streams are retrieved to test our code. The OpenCV library HOG-based pedestrian detection is used in order to detect people and their faces for more accuracy. An algorithm to track a person over 5 successive frames is also implemented in order to count him only once if this person happens to appear multiple times. Consequently, the program's output is composed of videos with rectangles around the detected persons and squares around their faces. 
+Detecting and tracking people on the real-time video stream of each store is developed with the \textsf{OpenCV} library HOG-based pedestrian detection. An algorithm to track a person over 5 successive frames is also implemented in order to count him only once if this person happens to appear multiple times. Consequently, the program's output is composed of videos with rectangles around the detected individuals and squares around their faces. 
 
-After multiple tests and changes, the detection quality could not be improved since many false negatives and false positives occured especially for face detection. The computation process could not be accelerated to get closer to a real time estimation since a GPU (Graphical processing unit) is required for this matter. These were the main problems that led the cancellation of this use case.
+After multiple tests and changes, the detection quality could not be improved since many false negatives and false positives occured especially for face detection. The computation process could not be accelerated to get closer to a real time estimation since a GPU (Graphical processing unit) is required for this matter. These are the main problems that led the cancellation of this use case.
+
+%Since there are currently no cameras in the stores for this purpose, video sets from the Internet and some available live streams are retrieved to test the code.
 
 \subsubsection{Data transfer and processing}
 
-This part’s purpose is to assure that the number of new persons detected by store after each frame is sent to a central unit where the data’s corresponding store is identified using Spark’s MapReduce functionality and aggregated to get the total number of persons per store hourly and then compute the mean time by city or by department. A front-end module was also planned to be implemented to present the results in real-time.
+This part’s purpose is to assure that the number of new persons detected by store after each frame is sent to a central unit where the data’s corresponding store is identified using \textsf{Spark}’s MapReduce functionality and aggregated to get the total number of persons per store hourly and then compute the mean time by city or by department. A front-end module was also planned to be implemented to visualize the results in real-time.
 
-The work that has been done was mainly based on basic input/output text files for tests instead of the real Apache Kafka channel that was expected to exist between each store and the central module.
+The work that has been done was mainly based on basic input/output text files for tests instead of the real \textsf{Apache Kafka} channel that was expected to exist between each store and the central module.
 
-Since the problems that were faced in the first part the team from pursuing this use case, implementing the front-end or to compute the mean times of affluence for cities and departments was abandoned.
+Since the problems that were faced in the first part the team from pursuing this use case, implementing the front-end or computing the mean times of affluence for cities and departments was abandoned.
 
 % Social networks use case
 \subsection{Data mining social networks}
 
 \subsubsection{Identifying useful sources}
 
-Social networks are a highly valuable source of information about consumers relationship towards a brand. For instance, \textsf{Orange} uses \textsf{Facebook} through two pages: \href{https://www.facebook.com/Orange.France/?ref=ts}{\textsf{Orange}} and \href{https://www.facebook.com/sosh/?fref=ts}{\textsf{Sosh}}, manages several \textsf{Twitter} accounts: \href{https://twitter.com/orange}{\textsf{@orange}} and \href{https://twitter.com/Orange_France}{\textsf{@Orange\_France}} for general communication about \textsf{Orange}, \href{https://twitter.com/Sosh_fr}{\textsf{@Sosh\_fr}} and \href{https://twitter.com/Orange_conseil}{\textsf{@Orange\_conseil}} as after-sales service accounts. Moreover, consumers can access forums at \href{https://communaute.orange.fr}{\url{communaute.orange.fr}}. These sources are used for fetching live data and feeding \textsf{Spark} with them.
+Social networks are a highly valuable source of information about consumers relationship towards a brand. For instance, \textsf{Orange} uses \textsf{Facebook} through two pages: \href{https://www.facebook.com/Orange.France/?ref=ts}{\textsf{Orange}} and \href{https://www.facebook.com/sosh/?fref=ts}{\textsf{Sosh}} and manages several \textsf{Twitter} accounts: \href{https://twitter.com/orange}{\textsf{@orange}}, \href{https://twitter.com/Orange_France}{\textsf{@Orange\_France}}, \href{https://twitter.com/Sosh_fr}{\textsf{@Sosh\_fr}} and \href{https://twitter.com/Orange_conseil}{\textsf{@Orange\_conseil}}. Moreover, consumers can access forums at \href{https://communaute.orange.fr}{\url{communaute.orange.fr}}. These sources are used for fetching live data and feeding \textsf{Spark} with them.
 
 \subsubsection{Spark applications}
 
@@ -107,12 +108,13 @@ Applications are also separated by sources, allowing a more flexible development
 
 \subsubsection{Sentiment analysis}
 
-Sentiment analysis refers to the use of natural language processing and text analysis to identify and extract subjective information in source materials. It aims at classifying the polarity of a given text — whether the expressed opinion is positive, negative, or neutral. 
+Sentiment analysis refers to the use of natural language processing and text analysis to identify and extract subjective information in source materials. It aims at classifying the polarity of a given text — whether the expressed opinion is positive, negative, or neutral.
 Based on the source, sentiment analysis is applied to tweets on \textsf{Twitter}, posts on \textsf{Facebook}, and thread titles and messages on forums.
 
 \paragraph{Dictionary-based approach}
 
-The first approach consists in deciding whether a text is positive, negative or neutral by looking at words in isolation, giving positive points for positive words and negative points for negative words found in two separate dictionaries and then summing up these points.
+The first approach consists in looking at words in isolation, giving positive points for positive words and negative points for negative words found in two separate dictionaries and then summing up these points.
+\vspace{9pt}
 
 The following workflow example is based on a real tweet from an \textsf{Orange} consumer.
 
@@ -133,9 +135,7 @@ The first step is to tokenize the text, translating a sentence into a list of in
     \label{tokens}
 \end{figure}
 
-Next, each word in the above list is looked up in the positive and negative words dictionaries. If found, the weight associated with a negative or positive sentiment, depending on which dictionary the word has been found in, is increased by an increment of one.
-
-In the above tweet, the words \textit{instable, aucun} can be found in the negative words. 
+Each word in the above list is then looked up in the positive and negative words dictionaries. In the above tweet, the words \textit{instable} and \textit{aucun} can be found in the negative dictionary. 
 %The word \textit{normal} is not considered positive nor negative because of the context. In order to label it accordingly, a look behind processing has to be implemented to detect the presence of the word \textit{pas}. The structure \textit{pas normal} would then be labeled as negative meanwhile \textit{normal} would be positive.
 
 Finally, the sentiment for the whole tweet is given by computing the difference between the positive weight and the negative weight. A sentiment score equal to 0 is associated with "NEUTRAL", while positive scores are marked as "POSITIVE" and negative scores as "NEGATIVE". Consequently, the example tweet has a negative weight of 2 and a positive weight of 0, labeling it as negative.
@@ -227,13 +227,13 @@ Furthermore, consistency is configured to use the QUORUM level with the followin
 \end{lstlisting}
 With a replication factor of 3, this ensures that 2 nodes are always written and 2 nodes are always read.
 
-\paragraph{Data schema}
+%\paragraph{Data schema}
 
-Data is stored in different keyspaces related to the aggregated sources: \textit{twitter\_streaming}, \textit{facebook} and \textit{forums} respectively for \textsf{Twitter}, \textsf{Facebook} and \textsf{Orange} forums.
+%Data is stored in different keyspaces related to the aggregated sources: \textit{twitter\_streaming}, \textit{facebook} and \textit{forums} respectively for \textsf{Twitter}, \textsf{Facebook} and \textsf{Orange} forums.
 
-For example, tweets are stored in a table called tweets with extracted fields from \textsf{Twitter} as well as computed ones: response\_time and sentiment.
+%For example, tweets are stored in a table called tweets with extracted fields from \textsf{Twitter} as well as computed ones: response\_time and sentiment.
           
-Two other tables are used for storing the velocity in tweets/min (freq) and the most popular hashtags (trends).
+%Two other tables are used for storing the velocity in tweets/min (freq) and the most popular hashtags (trends).
 
 \subsection{API}
 
@@ -242,7 +242,7 @@ Its documentation is written with \textsf{Swagger} [12] for a better visual repr
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.4]{img/api-docs.png}
+    \includegraphics[scale=0.38]{img/api-docs.png}
     \caption{API documentation available at \url{{API_IP_ADDRESS}:8080/docs}}
     \label{socket}
 \end{figure}
@@ -253,11 +253,12 @@ Along with this API, another \textsf{NodeJS} web server has been developed to se
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.12]{img/api-dashboard-socket.png}
+    \includegraphics[scale=0.11]{img/api-dashboard-socket.png}
     \caption{Realtime communication between clients and the server with \textsf{Socket.io}}
     \label{socket}
 \end{figure}
 
+\newpage
 \subsection{ELK stack}
 
 In parallel, the \textsf{Elasticsearch} - \textsf{Logstash} - \textsf{Kibana} stack is tested as a turnkey solution to replace \textsf{Cassandra}, the API and the web dashboard.
@@ -288,7 +289,7 @@ Once \textsf{Elasticsearch} has been filled with data processed by \textsf{Spark
 \subsection{Methodology}
 
 Agile software methodology was an efficient way of organizing this project where objectives were not accurate and stable at the beginning. The development was split in sprints (or iteration) of 3 weeks (See appendices).
-Moreover, short-term sprints allowed a part of the team to stop the video processing development before running low on budget (in hours).
+%Moreover, short-term sprints allowed a part of the team to stop the video processing development before running low on budget (in hours).
 
 The clients were actively involved in the process and meetings were planned every week when possible to demonstrate and review new features. The progress of the project could be followed thanks to weekly progress reports available at \url{bfovet.vvv.enseirb-matmeca.fr/reporting_projet}.
 
@@ -306,14 +307,13 @@ After a successful test on \textsf{Travis CI}, the resulting built \textsf{Docke
 
 Early in the project, data privacy issues were faced. A use case about analyzing customers logs was considered yet data had to be anonymized in the first place. Also, because access to \textsf{Orange} data was restricted, it was decided to focus on alternative sources of data: social networks and open source data sets.
 
-Moreover, many technical issues had to be solved or bypassed. At first, \textsf{Scala} was a new language with a particular syntax to be assimilated and machine learning and big data were concepts not addressed classes. Installing and configuring \textsf{Apache Spark} took several hours to be complete. Because a microservices architecture was preferable to be dealt with, many different parts hat to be developed and then integrated together.
+Moreover, many technical issues had to be solved or bypassed. At first, \textsf{Scala} was a new language with a particular syntax to be assimilated. Installing and configuring \textsf{Apache Spark} took several hours to be complete. Because a microservices architecture was preferable to be dealt with, many different parts hat to be developed and then integrated together.
 
 The sprint involving video processing had to be abandoned due to an overtime risk. Its integration with \textsf{Spark} was indeed too complex since it involved machine learning on images as well as streaming large amounts of data in real time.
 
 \section{Conclusion}
 
 The project consists of applications and services developed around \textsf{Apache Spark}, itself a useful piece of software for processing large amounts of data from various aggregated sources in real time, whether they are databases or online APIs. Development of such applications is relatively simple thanks to a rich ecosystem, including many libraries, bindings for different popular languages and an active community.
-\vspace{4pt}
 
 Though not completed, it would have been possible with enough allocated time to compute stores rush hours with video processing by combining \textsf{OpenCV} and \textsf{Spark}. Objectives of this use case were defined as identifying overcrowded stores and predicting popular times to shorten customers waiting time.
 \vspace{4pt}
@@ -380,6 +380,13 @@ While \textsf{Spark} continues to be heavily developed and maintained, next gene
 
 \subsection{Data visualization dashboard}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.13]{img/dataviz.png}
+    \caption{Data visualization dashboard}
+    \label{dataviz}
+\end{figure}
+
 \subsection{Project organization}
 
 \subsubsection{Project planning}
@@ -391,6 +398,7 @@ While \textsf{Spark} continues to be heavily developed and maintained, next gene
     \label{gantt}
 \end{figure}
 
+\newpage
 \subsubsection{Sprints}
 
 \begin{center}
@@ -413,6 +421,7 @@ While \textsf{Spark} continues to be heavily developed and maintained, next gene
 \end{tabular}
 \end{center}
 
+\vspace{15pt}
 \subsubsection{Burndown chart}
 
 \begin{figure}[h!]
