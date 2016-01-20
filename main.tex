@@ -195,7 +195,7 @@ Microservices pattern is an architectural style in which large complex software 
 
 \subsection{Docker}
 
-To facilitate the deployment of each application, \textsf{Docker} is the ideal technology. It automates the deployment of applications inside containers, isolated from the host and other containers by leveraging features of the \textsf{Linux} kernel. \textsf{Docker} containers wrap up a piece of software in a complete filesystem with its dependencies – ensuring that it will run consistently across all environments. In terms of virtualization, \textsf{Docker} uses the features of the host OS (Operating System) instead of requiring an hypervisor and a guest OS like a virtual machine.
+\textsf{Docker} is the ideal technology to facilitate the deployment of each application. It automates the deployment of applications inside containers, isolated from the host and other containers by leveraging features of the \textsf{Linux} kernel. \textsf{Docker} containers wrap up a piece of software in a complete filesystem with its dependencies – ensuring that it will run consistently across all environments. In terms of virtualization, \textsf{Docker} uses the features of the host OS (Operating System) instead of requiring an hypervisor and a guest OS like a virtual machine.
 
 %\begin{figure}[h!]
 %    \centering
@@ -218,7 +218,7 @@ The \textsf{Spark} cluster is deployed with \textsf{Docker Compose} [9] and both
 
 Ensuring reliability and fault tolerance on multiple nodes is possible by setting the replication factor according to the number of nodes in the cluster. For instance, three nodes (A, B, C) are deployed for this project. 
 
-With a replication factor of 3, the QUORUM level (rounded down to a whole number) is (replication factor/2) + 1 = 2 which means the cluster can tolerate 1 node down. Besides, each node holds 100\% of the data. This allows a client to write data to A and read the exact replica from B.
+With a replication factor of 3, the QUORUM level (rounded down to a whole number) is (replication factor/2) + 1 = 2 which means the cluster can tolerate 1 node down. Besides, each node holds 100\% of the data. This allows a client to write data to A and read the same exact replica from B.
 
 Furthermore, consistency is configured to use the QUORUM level with the following \textsf{CQL} (\textsf{Cassandra} Query Language) [11] command:
 
@@ -313,7 +313,7 @@ The sprint involving video processing had to be abandoned due to an overtime ris
 
 \section{Conclusion}
 
-The project consists of applications and services developed around \textsf{Apache Spark}, itself a useful piece of software for processing large amounts of data from various aggregated sources in real time, whether they are databases or online APIs. Development of such applications is relatively simple thanks to a rich ecosystem, including many libraries, bindings for different popular languages and an active community.
+The project consists of applications and services developed around \textsf{Apache Spark}, itself being a useful piece of software for processing large amounts of data from various aggregated sources in real time, whether they are databases or online APIs. Development of such applications is relatively simple thanks to a rich ecosystem, including many libraries, bindings for different popular languages and an active community.
 
 Though not completed, it would have been possible with enough allocated time to compute stores rush hours with video processing by combining \textsf{OpenCV} and \textsf{Spark}. Objectives of this use case were defined as identifying overcrowded stores and predicting popular times to shorten customers waiting time.
 \vspace{4pt}
@@ -321,7 +321,7 @@ Though not completed, it would have been possible with enough allocated time to 
 Finally, applications for data mining social networks - \textsf{Twitter}, \textsf{Facebook} and \textsf{Orange} forums - are a tool to help community managers to focus on unanswered questions of customers on after-sales accounts and offer a global point of view on trends and sentiment towards the brand from uncorrelated data.
 \vspace{4pt}
 
-While \textsf{Spark} continues to be heavily developed and maintained, next generation software for big data processing are being released. \textsf{Apache Flink} [16] is still in a beta state (0.10.1 - 27 November 2015) and it is focused on streaming making it equivalent to the \textsf{Spark Streaming} module.
+While \textsf{Spark} continues to be heavily developed and maintained, next generation software for big data processing are being released. \textsf{Apache Flink} [16] is still in a beta state (0.10.1 - 27 November 2015) and it is solely focused on streaming, making it equivalent to the \textsf{Spark Streaming} module.
 
 \section{References}
 \bibliographystyle{plain}
