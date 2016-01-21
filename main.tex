@@ -26,7 +26,7 @@
 \maketitle
 
 \begin{abstract}
-\textbf{Abstract.} This paper deals with the concepts of \textbf{\textit{machine learning}} and \textbf{\textit{data mining}} social networks, which are increasingly useful for businesses to know the consumers' sentiment towards their brand. This project, intended for use by engineers at \textsf{Orange France}, focuses on the development of a micro-services architecture built around the open source cluster computing framework, \textsf{\textbf{Apache Spark}}. Thanks to is distributed model, \textsf{Spark} can process massive amounts of data stored in databases as well as real time data streamed from social networks. Data is then stored in a cluster database and exposed by an API (Application Programming Interface) for users to see them in real time.
+\textbf{Abstract.} This paper deals with the concepts of \textbf{\textit{machine learning}} and \textbf{\textit{data mining}} social networks, which are increasingly useful for businesses to know the consumers' sentiment towards their brand. This project, intended for use by engineers at \textsf{Orange France}, focuses on the development of a micro-services architecture built around the open source cluster computing framework, \textsf{\textbf{Apache Spark}}. Thanks to is distributed model, \textsf{Spark} can process massive amounts of data stored in databases as well as real time data streamed from social networks. Data is then stored in a cluster database and exposed by an API (Application Programming Interface) for users to access them in real time.
 \end{abstract}
 
 \section{Context}
@@ -81,13 +81,13 @@ Finally, the retained solution was installing a camera in the different stores a
 
 Detecting and tracking people on the real-time video stream of each store is developed with the \textsf{OpenCV} library HOG-based pedestrian detection. An algorithm to track a person over 5 successive frames is also implemented in order to count him only once if this person happens to appear multiple times. Consequently, the program's output is composed of videos with rectangles around the detected individuals and squares around their faces. 
 
-After multiple tests and changes, the detection quality could not be improved since many false negatives and false positives occured especially for face detection. The computation process could not be accelerated to get closer to a real time estimation since a GPU (Graphical processing unit) is required for this matter. These are the main problems that led the cancellation of this use case.
+After multiple tests and changes, the detection quality could not be improved since many false negatives and false positives occured especially for face detection. The computation process could not be accelerated to get closer to a real time estimation since a GPU (Graphical Processing Unit) is required for this matter. These are the main problems that led to the cancellation of this use case.
 
 %Since there are currently no cameras in the stores for this purpose, video sets from the Internet and some available live streams are retrieved to test the code.
 
 \subsubsection{Data transfer and processing}
 
-This part’s purpose is to assure that the number of new persons detected by store after each frame is sent to a central unit where the data’s corresponding store is identified using \textsf{Spark}’s MapReduce functionality and aggregated to get the total number of persons per store hourly and then compute the mean time by city or by department. A front-end module was also planned to be implemented to visualize the results in real-time.
+This part’s purpose is to assure that the number of new persons detected after each frame is sent to a central unit where the data’s corresponding store is identified using \textsf{Spark}’s MapReduce functionality and aggregated to get the total number of persons per store hourly and then compute the mean time by city or by department. A front-end module was also planned to be implemented to visualize the results in real-time.
 
 The work that has been done was mainly based on basic input/output text files for tests instead of the real \textsf{Apache Kafka} channel that was expected to exist between each store and the central module.
 
@@ -102,7 +102,7 @@ Social networks are a highly valuable source of information about consumers rela
 
 \subsubsection{Spark applications}
 
-As said in section~\ref{apache spark}, \textsf{Spark} applications can be written in several languages: \textsf{Java}, \textsf{Python} or \textsf{Scala}. \textsf{Scala} was initially chosen since \textsf{Spark} itself is developed in \textsf{Scala} and it is also less verbose than \textsf{Java} code. Furthermore, \textsf{Java} and \textsf{Scala} applications have the advantage of being compiled and packaged into an \textsf{\textbf{Uber-JAR}}. \textsf{\textbf{JAR}} (\textsf{Java} ARchive) is a package file format used to aggregate class files required for an application to run, and an \textsf{Uber-JAR} is a \textsf{JAR} that not only contains the application code but also embeds its dependencies as well. This way, the application only needs to be submitted with the \textsf{Uber-JAR} file to \textsf{Spark} to be executed.
+As said in section~\ref{apache spark}, \textsf{Spark} applications can be written in several languages: \textsf{Java}, \textsf{Python} or \textsf{Scala}. \textsf{Scala} was initially chosen since \textsf{Spark} itself is developed in \textsf{Scala} and it is also less verbose than \textsf{Java} code. Furthermore, \textsf{Java} and \textsf{Scala} applications have the advantage of being compiled and packaged into an \textsf{\textbf{Uber-JAR}}. \textsf{\textbf{JAR}} (\textsf{Java} ARchive) is a package file format used to aggregate class files required for an application to run, and an \textsf{Uber-JAR} is a \textsf{JAR} that not only contains the application code but also embeds its dependencies as well. This way, only the \textsf{Uber-JAR} needs to be submitted to \textsf{Spark} for the application to be executed.
 
 Applications are also separated by sources, allowing a more flexible development and release to production as well as a reduction of risks. Indeed, \textsf{Facebook} and \textsf{Twitter} have their own independent API services and having issues with one will not impact the other. This structure also leads to a better bug tracking management with having the bug-free application uninterrupted.
 
@@ -145,10 +145,10 @@ This method is far from perfect since it gives a sentiment based on separate wor
 
 \paragraph{Machine learning-based approach}
 
-Thanks to \textsf{Spark}'s Machine Learning library \textsf{MLlib}, classification algorithms can be applied to analyze tweets. In this approach, the Naive Bayes [6] algorithm, a probabilistic classifier based on Bayes' theorem, and the Random Forest [7] algorithm, an ensemble of decision trees for binary and multiclass classification, are implemented through two steps: train and predict.
+Thanks to \textsf{Spark}'s Machine Learning library \textsf{MLlib}, classification algorithms can be applied to analyze tweets more accurately. In this approach, the Naive Bayes [6] algorithm, a probabilistic classifier based on Bayes' theorem, and the Random Forest [7] algorithm, an ensemble of decision trees for binary and multiclass classification, are implemented through two steps: train and predict.
 
 \vspace{9pt}
-Training the data requires having a set of tweets already classified by hand, with 1 meaning positive and 0 meaning negative. This data set is then loaded and 80\% of the data is split into training data, used to train the classifier model, while 20\% is split into testing data, used to assess the performance and the accuracy of the trained model.
+Training the data requires having a set of tweets already classified by hand, with 1 meaning \textit{positive} and 0 meaning \textit{negative}. This data set is then loaded and 80\% of the data is split into training data, used to train the classifier model, while 20\% is split into testing data, used to assess the performance and the accuracy of the trained model.
 With these algorithms, 74\% of the 1343 tweets is correctly classified. According to the computed results below, the Random Forest algorithm is slightly more accurate than the Naive Bayes algorithm yet it is less time efficient. % Add detail about trees options ?
 
 \begin{center}
@@ -184,7 +184,7 @@ Scraping \textsf{Orange} forums web pages was done in \textsf{Scala}, for better
 
 % Presentation and schema first
 
-Microservices pattern is an architectural style in which large complex software applications are broken down into a collection of small, independent, loosely coupled processes. This helps upgrading, modifying or changing one service instead of taking down the entire system. As shown in the figure below, this project is composed of several services communicating with each other, which are presented in the next sections.
+Microservices pattern is an architectural style in which large complex software applications are broken down into a collection of small, independent, loosely coupled processes. This helps upgrading, modifying or replacing one service instead of taking down the entire system. As shown in the figure below, this project is composed of several services communicating with each other, which are presented in the next sections.
 
 \begin{figure}[h!]
     \centering
@@ -208,7 +208,7 @@ The \textsf{Spark} cluster is deployed with \textsf{Docker Compose} [9] and both
 
 \subsection{Spark cluster}
 
-\textsf{Spark} follows the master-slave model and it is composed of a master which schedules and shares jobs between one or more workers.
+\textsf{Spark} follows the master-slave model and it is composed of a master node which schedules and shares jobs between one or more workers.
 
 \subsection{Cassandra cluster}
 
@@ -254,7 +254,7 @@ Along with this API, another \textsf{NodeJS} web server has been developed to se
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.11]{img/api-dashboard-socket.png}
-    \caption{Realtime communication between clients and the server with \textsf{Socket.io}}
+    \caption{Real time communication between clients and the server with \textsf{Socket.io}}
     \label{socket}
 \end{figure}
 
@@ -262,11 +262,11 @@ Along with this API, another \textsf{NodeJS} web server has been developed to se
 \subsection{ELK stack}
 
 In parallel, the \textsf{Elasticsearch} - \textsf{Logstash} - \textsf{Kibana} stack is tested as a turnkey solution to replace \textsf{Cassandra}, the API and the web dashboard.
-Each of the three parts of the \textsf{ELK} stack have a very specific role : 
+Each of the three parts of the \textsf{ELK} stack has a very specific role : 
 \begin{itemize}
 \item \textsf{Elasticsearch} manages the database and the requests to it
 \item \textsf{Logstash} sends data to \textsf{Elasticsearch} from a data file (\texttt{csv}, \texttt{json}, ...). In this project, \textsf{Logstash} is not used as \textsf{Spark} enables data to be directly saved in \textsf{Elasticsearch}
-\item \textsf{Kibana} is the visualization tool, for creating nice diagrams and graphs. It is a web application, in which the dashboards can directly be created using visual programming
+\item \textsf{Kibana} is the visualization tool, for creating diagrams and graphs. It is a web application, in which the dashboards can directly be created using visual programming
 \end{itemize}
 
 The architecture used for integrating \textsf{ELK} tools in the project is shown on Figure \ref*{infra}.
@@ -307,7 +307,7 @@ After a successful test on \textsf{Travis CI}, the resulting built \textsf{Docke
 
 Early in the project, data privacy issues were faced. A use case about analyzing customers logs was considered yet data had to be anonymized in the first place. Also, because access to \textsf{Orange} data was restricted, it was decided to focus on alternative sources of data: social networks and open source data sets.
 
-Moreover, many technical issues had to be solved or bypassed. At first, \textsf{Scala} was a new language with a particular syntax to be assimilated. Installing and configuring \textsf{Apache Spark} took several hours to be complete. Because a microservices architecture was preferable to be dealt with, many different parts hat to be developed and then integrated together.
+Moreover, many technical issues had to be solved or bypassed. At first, \textsf{Scala} was a new language with a particular syntax to be assimilated. Installing and configuring \textsf{Apache Spark} took several hours to be complete. Since a microservices architecture was preferable to be dealt with, many different parts hat to be developed and then integrated together.
 
 The sprint involving video processing had to be abandoned due to an overtime risk. Its integration with \textsf{Spark} was indeed too complex since it involved machine learning on images as well as streaming large amounts of data in real time.
 
@@ -318,7 +318,7 @@ The project consists of applications and services developed around \textsf{Apach
 Though not completed, it would have been possible with enough allocated time to compute stores rush hours with video processing by combining \textsf{OpenCV} and \textsf{Spark}. Objectives of this use case were defined as identifying overcrowded stores and predicting popular times to shorten customers waiting time.
 \vspace{4pt}
 
-Finally, applications for data mining social networks - \textsf{Twitter}, \textsf{Facebook} and \textsf{Orange} forums - are a tool to help community managers to focus on unanswered questions of customers on after-sales accounts and offer a global point of view on trends and sentiment towards the brand from uncorrelated data.
+Finally, applications for data mining social networks - \textsf{Twitter}, \textsf{Facebook} and \textsf{Orange} forums - can be tools to help community managers to focus on unanswered questions of customers on after-sales accounts and offer a global point of view on trends and sentiment towards the brand from uncorrelated data.
 \vspace{4pt}
 
 While \textsf{Spark} continues to be heavily developed and maintained, next generation software for big data processing are being released. \textsf{Apache Flink} [16] is still in a beta state (0.10.1 - 27 November 2015) and it is solely focused on streaming, making it equivalent to the \textsf{Spark Streaming} module.
@@ -382,7 +382,7 @@ While \textsf{Spark} continues to be heavily developed and maintained, next gene
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.13]{img/dataviz.png}
+    \includegraphics[scale=0.13]{img/dataviz2.png}
     \caption{Data visualization dashboard}
     \label{dataviz}
 \end{figure}
